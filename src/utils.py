@@ -27,3 +27,22 @@ def load_object(file_path):
 
     except Exception as e:
         raise CustomException(e, sys)
+    
+
+def evaluate_model(X_train,Y_train,X_test,Y_test,models):
+    try:
+        report = {}
+        
+        for model_name,model in models.items():
+            model.fit(X_train,Y_train)
+            
+            y_test_pred = model.predict(X_test)
+            
+            test_model_score = r2_score(y_test_pred,Y_test)
+            
+            report[model_name] = test_model_score
+            
+            return report 
+        
+    except Exception as e:
+        raise CustomException(e,sys)
